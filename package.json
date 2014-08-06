@@ -1,0 +1,27 @@
+{
+  "name": "demo-api",
+  "version": "0.0.0",
+  "description": "Contrived demo app for testing CI servers",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lukebond/demo-api"
+  },
+  "keywords": [
+    "demo",
+    "test"
+  ],
+  "author": "Luke Bond <luke.n.bond@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lukebond/demo-api/issues"
+  },
+  "homepage": "https://github.com/lukebond/demo-api",
+  "dependencies": {
+    "ip": "^0.3.1",
+    "restify": "^2.8.1"
+  }
+}
