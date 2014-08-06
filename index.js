@@ -6,7 +6,7 @@ var server = restify.createServer({
 });
 
 server.get('/', function (req, res, next) {
-  res.send(200, 'Hello, world from ' + ip.address());
+  res.send(200, 'Hello, world from ' + ip.address() + '!');
   return next();
 });
 
