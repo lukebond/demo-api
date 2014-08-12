@@ -4,7 +4,7 @@
   "description": "Contrived demo app for testing CI servers",
   "main": "index.js",
   "scripts": {
-    "test": "node test/test.js"
+    "test": "./test/test.sh"
   },
   "repository": {
     "type": "git",
