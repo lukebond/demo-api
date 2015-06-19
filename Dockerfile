@@ -1,4 +1,9 @@
-FROM node
+FROM gliderlabs/alpine:3.1
+
+RUN \
+  apk --update add nodejs python make g++ \
+    curl wget \
+      build-base ca-certificates git haproxy socat
 
 WORKDIR /usr/src/app
 
