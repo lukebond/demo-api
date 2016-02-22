@@ -12,4 +12,4 @@ server.get('/', function (req, res, next) {
   return next();
 });
 
-server.listen(9000);
+server.listen(+(process.env.DEMO_API_PORT || '9000'));
