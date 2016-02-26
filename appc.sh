@@ -23,15 +23,15 @@ acbuild --debug run -- apk update
 acbuild --debug run -- apk add nodejs
 
 # Copy the app to the ACI & npm install
-acbuild --debug copy package.json /app/package.json
-acbuild --debug run -- /bin/sh -c 'cd /app && npm install'
-acbuild --debug copy index.js /app/index.js
+acbuild --debug copy package.json /app/demo-api/package.json
+acbuild --debug run -- /bin/sh -c 'cd /app/demo-api && npm install'
+acbuild --debug copy index.js /app/demo-api/index.js
 
 # Add a port for http traffic
 acbuild --debug port add http tcp 9000
 
 # Run nodejs with the app
-acbuild --debug set-working-directory /app
+acbuild --debug set-working-directory /app/demo-api
 acbuild --debug set-exec -- /usr/bin/node index.js
 
 # Write the result

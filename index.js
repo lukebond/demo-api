@@ -1,9 +1,7 @@
 var ip = require('ip');
 var restify = require('restify');
 
-var server = restify.createServer({
-  name: 'demo'
-});
+var server = restify.createServer({ name: 'demo' });
 
 var message = process.env.MESSAGE || 'Hello, world';
 
