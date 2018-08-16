@@ -5,7 +5,8 @@ node {
 
   withCredentials([
       usernamePassword(credentialsId: 'docker-credentials',
-                       usernameVariable: 'USERNAME')]) {
+                       usernameVariable: 'USERNAME',
+                       passwordVariable: 'PASSWORD')]) {
     stage('Build') {
       sh 'docker image build -t ${USERNAME}/demo-api:latest .'
     }
