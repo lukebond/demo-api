@@ -22,7 +22,11 @@ node {
     }
   }
 
-  stage('Deploy') {
-    // placeholder
+  withCredentials([
+      file(credentialsId: 'kube-config',
+           variable: 'KUBECONFIG'')]) {
+    stage('Deploy') {
+      sh 'kubectl create -f deployment.yaml'
+    }
   }
 }
