@@ -24,7 +24,7 @@ node {
 
   withCredentials([
       file(credentialsId: 'kube-config',
-           variable: 'KUBECONFIG'')]) {
+           variable: 'KUBECONFIG')]) {
     stage('Deploy') {
       sh 'kubectl create -f deployment.yaml'
     }
