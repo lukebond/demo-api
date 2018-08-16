@@ -4,7 +4,7 @@ node {
   }
 
   withCredentials([
-      usernamePassword(credentialsId: 'dockerhub-credentials',
+      usernamePassword(credentialsId: 'docker-credentials',
                        usernameVariable: 'USERNAME')]) {
     stage('Build') {
       sh 'docker image build -t ${USERNAME}/demo-api:latest .'
@@ -12,7 +12,7 @@ node {
   }
 
   withCredentials([
-      usernamePassword(credentialsId: 'dockerhub-credentials',
+      usernamePassword(credentialsId: 'docker-credentials',
                        usernameVariable: 'USERNAME',
                        passwordVariable: 'PASSWORD')]) {
     stage('Push') {
