@@ -15,7 +15,10 @@ node {
   stage('Scan') {
     withCredentials([
         string(credentialsId: 'microscanner-token',
-               variable: 'MICROSCANNER_TOKEN')]) {
+               variable: 'MICROSCANNER_TOKEN'),
+        usernamePassword(credentialsId: 'docker-credentials',
+                         usernameVariable: 'USERNAME',
+                         passwordVariable: 'PASSWORD')]) {
       sh 'wget https://github.com/lukebond/microscanner-wrapper/raw/master/scan.sh -O /usr/local/bin/scan.sh && chmod +x /usr/local/bin/scan.sh'
       sh '/usr/local/bin/scan.sh ${USERNAME}/demo-api:latest'
     }
