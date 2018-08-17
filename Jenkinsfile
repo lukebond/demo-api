@@ -16,7 +16,7 @@ node {
     withCredentials([
         string(credentialsId: 'microscanner-token',
                variable: 'MICROSCANNER-TOKEN')]) {
-      sh 'wget https://github.com/lukebond/microscanner-wrapper/raw/master/scan.sh -O /usr/local/bin/scan.sh'
+      sh 'wget https://github.com/lukebond/microscanner-wrapper/raw/master/scan.sh -O /usr/local/bin/scan.sh && chmod +x /usr/local/bin/scan.sh'
       sh '/usr/local/bin/scan.sh ${USERNAME}/demo-api:latest'
     }
   }
