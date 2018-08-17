@@ -20,7 +20,8 @@ node {
                          usernameVariable: 'USERNAME',
                          passwordVariable: 'PASSWORD')]) {
       sh 'wget https://github.com/lukebond/microscanner-wrapper/raw/master/scan.sh -O /usr/local/bin/scan.sh && chmod +x /usr/local/bin/scan.sh'
-      sh 'MICROSCANNER_OPTIONS=--html /usr/local/bin/scan.sh ${USERNAME}/demo-api:latest'
+      sh 'MICROSCANNER_OPTIONS=--html /usr/local/bin/scan.sh ${USERNAME}/demo-api:latest > report.html'
+      sh 'pwd && file report.html && ls -la report.html'
     }
   }
 
