@@ -3,29 +3,29 @@ node {
     checkout scm
   }
 
-  withCredentials([
-      usernamePassword(credentialsId: 'docker-credentials',
-                       usernameVariable: 'USERNAME',
-                       passwordVariable: 'PASSWORD')]) {
-    stage('Build') {
+  stage('Build') {
+    withCredentials([
+        usernamePassword(credentialsId: 'docker-credentials',
+                         usernameVariable: 'USERNAME',
+                         passwordVariable: 'PASSWORD')]) {
       sh 'docker image build -t ${USERNAME}/demo-api:latest .'
     }
   }
 
-  withCredentials([
-      usernamePassword(credentialsId: 'docker-credentials',
-                       usernameVariable: 'USERNAME',
-                       passwordVariable: 'PASSWORD')]) {
-    stage('Push') {
+  stage('Push') {
+    withCredentials([
+        usernamePassword(credentialsId: 'docker-credentials',
+                         usernameVariable: 'USERNAME',
+                         passwordVariable: 'PASSWORD')]) {
       sh 'docker login -p "${PASSWORD}" -u "${USERNAME}"'
       sh 'docker image push ${USERNAME}/demo-api:latest'
     }
   }
 
-  withCredentials([
-      file(credentialsId: 'kube-config',
-           variable: 'KUBECONFIG')]) {
-    stage('Deploy') {
+  stage('Deploy') {
+    withCredentials([
+        file(credentialsId: 'kube-config',
+             variable: 'KUBECONFIG')]) {
       sh 'kubectl apply -f deployment.yaml'
     }
   }
