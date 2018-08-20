@@ -30,6 +30,7 @@ node {
                          usernameVariable: 'USERNAME',
                          passwordVariable: 'PASSWORD')]) {
       sh '''
+				GRAFEAS_HOST=10.10.5.147
 				SIGNATURE_FILENAME=signature-${BUILD_NUMBER}.gpg
 				GPG_EMAIL=luke@control-plane.io
 				DIGEST=$(docker image inspect ${USERNAME}/demo-api:latest | jq -r .[0].Id)
@@ -52,7 +53,7 @@ node {
 				}
 				EOF
 				curl -i -X POST \
-				  "http://127.0.0.1:8081/v1alpha1/projects/image-signing/occurrences" \
+				  "http://${GRAFEAS_HOST}:8081/v1alpha1/projects/image-signing/occurrences" \
 				  -d @image-signing-occurence.json
       '''
     }
