@@ -38,7 +38,7 @@ node {
 				GPG_SIGNATURE=$(cat ${SIGNATURE_FILENAME} | base64 -w 0)
 				rm ${SIGNATURE_FILENAME}
 				GPG_KEY_ID=$(gpg --no-tty --with-colons --with-fingerprint --force-v4-certs --list-keys ${GPG_EMAIL} | grep '^fpr' | awk -F: '{print $10}')
-				cat > image-signing-occurence.json <<EOF
+				cat > image-signing-occurence.json <<-EOF
 				{
 				  "resourceUrl": "${RESOURCE_URL}",
 				  "noteName": "projects/image-signing/notes/production",
