@@ -1,0 +1,38 @@
+FROM gliderlabs/alpine:3.6 as builder
+
+# in-toto
+RUN \
+  apk --update add python2 python2-dev py2-pip build-base py2-cffi libressl-dev
+RUN pip install in-toto colorama
+
+# nodejs
+RUN \
+  apk --update add nodejs-npm python make g++ \
+    curl wget build-base ca-certificates git
+WORKDIR /usr/src/app
+ADD . /usr/src/app/
+
+ADD in-toto/build_key /etc/in-toto/key
+RUN in-toto-run -k /etc/in-toto/key -n build -m . -p . -- npm install
+
+#
+
+FROM gliderlabs/alpine:3.6 as link-metadata
+RUN mkdir /in-toto
+COPY --from=builder /usr/src/app/build*.link /in-toto
+
+#
+
+FROM gliderlabs/alpine:3.6 as final
+
+RUN \
+  apk --update add nodejs python make g++ \
+    curl wget build-base ca-certificates git
+WORKDIR /usr/src/app
+COPY --from=builder /usr/src/app/package.json /usr/src/app
+COPY --from=builder /usr/src/app/index.js /usr/src/app
+COPY --from=builder /usr/src/app/node_modules/ /usr/src/app/node_modules
+
+EXPOSE 9000
+
+CMD [ "node", "index" ]
