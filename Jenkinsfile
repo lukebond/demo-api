@@ -10,8 +10,6 @@ node {
                          passwordVariable: 'PASSWORD'),
         file(credentialsId: 'intoto-build_key',
              variable: 'INTOTO_BUILD_KEY_FILE'),
-        file(credentialsId: 'intoto-root_key',
-             variable: 'INTOTO_ROOT_KEY_FILE'),
         file(credentialsId: 'intoto-root_key.pub',
              variable: 'INTOTO_ROOT_KEY_PUB_FILE'),
         file(credentialsId: 'intoto-root.layout',
@@ -24,7 +22,6 @@ node {
         # you can't mount secret files into docker-in-docker containers
         cp ${INTOTO_BUILD_KEY_FILE} in-toto/build_key
         cp ${INTOTO_ROOT_KEY_PUB_FILE} in-toto/root_key.pub
-        cp ${INTOTO_ROOT_KEY_FILE} in-toto/root_key
         cp ${INTOTO_ROOT_LAYOUT_FILE} in-toto/root.layout
         OUTPUT=$(docker image build \
           -f Dockerfile-in-toto . | tee >(cat - >&5))

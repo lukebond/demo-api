@@ -52,8 +52,6 @@ COPY --from=builder /usr/src/app/node_modules/ /in-toto/node_modules
 COPY --from=builder /usr/src/app/build*.link /in-toto
 ARG INTOTO_ROOT_LAYOUT=in-toto/root.layout
 ARG INTOTO_ROOT_KEY_PUB=in-toto/root_key.pub
-ARG INTOTO_ROOT_KEY=in-toto/root_key
 ADD ${INTOTO_ROOT_LAYOUT} /in-toto
 ADD ${INTOTO_ROOT_KEY_PUB} /in-toto
-ADD ${INTOTO_ROOT_KEY} /in-toto
 RUN in-toto-verify -v -k root_key.pub -l root.layout
