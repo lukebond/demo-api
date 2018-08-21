@@ -13,7 +13,7 @@ WORKDIR /usr/src/app
 ADD . /usr/src/app/
 
 ARG INTOTO_BUILD_KEY=in-toto/build_key
-ADD in-toto/build_key /etc/in-toto/key
+ADD ${INTOTO_BUILD_KEY} /etc/in-toto/key
 RUN in-toto-run -k /etc/in-toto/key -n build -m . -p . -- npm install
 
 #
