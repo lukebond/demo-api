@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lukebond/demo-api"
+    "url": "git@github.com:lukebond/demo-api.git"
   },
   "keywords": [
     "demo",
