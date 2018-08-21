@@ -16,6 +16,7 @@ node {
              variable: 'INTOTO_ROOT_LAYOUT_FILE')]) {
       sh '''#!/bin/bash
         set -e
+        set -x
         set -u
         set -o pipefail
         exec 5>&1
