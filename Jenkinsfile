@@ -9,19 +9,21 @@ node {
                          usernameVariable: 'USERNAME',
                          passwordVariable: 'PASSWORD'),
         file(credentialsId: 'intoto-build_key',
-             variable: 'INTOTO_BUILD_KEY'),
+             variable: 'INTOTO_BUILD_KEY_FILE'),
         file(credentialsId: 'intoto-root_key',
-             variable: 'INTOTO_ROOT_KEY'),
+             variable: 'INTOTO_ROOT_KEY_FILE'),
         file(credentialsId: 'intoto-root.layout',
-             variable: 'INTOTO_ROOT_LAYOUT')]) {
+             variable: 'INTOTO_ROOT_LAYOUT_FILE')]) {
       sh '''#!/bin/bash
+        set -e
         set -u
         set -o pipefail
         exec 5>&1
-        echo $INTOTO_BUILD_KEY
-        echo $INTOTO_ROOT_KEY
-        echo $INTOTO_ROOT_LAYOUT
-        OUTPUT=$(docker image build -f Dockerfile-in-toto . | tee >(cat - >&5))
+        OUTPUT=$(docker image build \
+          --build-arg INTOTO_BUILD_KEY=${INTOTO_BUILD_KEY_FILE} \
+          --build-arg INTOTO_ROOT_KEY=${INTOTO_ROOT_KEY_FILE} \
+          --build-arg INTOTO_ROOT_LAYOUT=${INTOTO_ROOT_LAYOUT_FILE} \
+          -f Dockerfile-in-toto . | tee >(cat - >&5))
         IMAGE_ID=$(echo $OUTPUT | grep -B1 'FROM gliderlabs/alpine:3.6 as verify' | head -1 | awk '{print $2}')
         docker image tag ${IMAGE_ID} ${USERNAME}/demo-api:latest
       '''
