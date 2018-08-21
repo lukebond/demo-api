@@ -12,6 +12,7 @@ RUN \
 WORKDIR /usr/src/app
 ADD . /usr/src/app/
 
+ARG INTOTO_BUILD_KEY=in-toto/build_key
 ADD in-toto/build_key /etc/in-toto/key
 RUN in-toto-run -k /etc/in-toto/key -n build -m . -p . -- npm install
 
@@ -49,6 +50,8 @@ COPY --from=builder /usr/src/app/package.json /in-toto
 COPY --from=builder /usr/src/app/index.js /in-toto
 COPY --from=builder /usr/src/app/node_modules/ /in-toto/node_modules
 COPY --from=builder /usr/src/app/build*.link /in-toto
-ADD in-toto/root.layout /in-toto
-ADD in-toto/root_key.pub /in-toto
+ARG INTOTO_ROOT_LAYOUT=in-toto/root.layout
+ARG INTOTO_ROOT_KEY=in-toto/root_key
+ADD ${INTOTO_ROOT_LAYOUT} /in-toto
+ADD ${INTOTO_ROOT_KEY} /in-toto
 RUN in-toto-verify -v -k root_key.pub -l root.layout

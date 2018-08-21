@@ -15,14 +15,12 @@ node {
         file(credentialsId: 'intoto-root.layout',
              variable: 'INTOTO_ROOT_LAYOUT')]) {
       sh '''#!/bin/bash
-        echo 1111111
-        set -e
-        echo 2222222
         set -u
-        echo 3333333
         set -o pipefail
-        echo 4444444
         exec 5>&1
+        echo $INTOTO_BUILD_KEY
+        echo $INTOTO_ROOT_KEY
+        echo $INTOTO_ROOT_LAYOUT
         OUTPUT=$(docker image build -f Dockerfile-in-toto . | tee >(cat - >&5))
         IMAGE_ID=$(echo $OUTPUT | grep -B1 'FROM gliderlabs/alpine:3.6 as verify' | head -1 | awk '{print $2}')
         docker image tag ${IMAGE_ID} ${USERNAME}/demo-api:latest
