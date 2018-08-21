@@ -14,7 +14,7 @@ node {
              variable: 'INTOTO_ROOT_KEY'),
         file(credentialsId: 'intoto-root.layout',
              variable: 'INTOTO_ROOT_LAYOUT')]) {
-      sh '''#!/bin/bash
+      sh '''#!/bin/bash -euo pipefail
         exec 5>&1
         OUTPUT=$(docker image build -f Dockerfile-in-toto . | tee >(cat - >&5))
         IMAGE_ID=$(echo $OUTPUT | grep -B1 'FROM gliderlabs/alpine:3.6 as verify' | head -1 | awk '{print $2}')
