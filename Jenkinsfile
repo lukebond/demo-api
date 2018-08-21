@@ -16,9 +16,9 @@ node {
              variable: 'INTOTO_ROOT_LAYOUT')]) {
       sh '''
 				exec 5>&1
-				OUTPUT=$(docker image build -f Dockerfile-in-toto . | tee >(cat - >&5))
-				IMAGE_ID=$(echo $OUTPUT | grep -B1 'FROM gliderlabs/alpine:3.6 as verify' | head -1 | awk '{print $2}')
-				docker image tag ${IMAGE_ID} ${USERNAME}/demo-api:latest
+				#OUTPUT=$(docker image build -f Dockerfile-in-toto . | tee >(cat - >&5))
+				#IMAGE_ID=$(echo $OUTPUT | grep -B1 'FROM gliderlabs/alpine:3.6 as verify' | head -1 | awk '{print $2}')
+				#docker image tag ${IMAGE_ID} ${USERNAME}/demo-api:latest
       '''
     }
   }
