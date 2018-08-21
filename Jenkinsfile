@@ -14,7 +14,7 @@ node {
              variable: 'INTOTO_ROOT_KEY'),
         file(credentialsId: 'intoto-root.layout',
              variable: 'INTOTO_ROOT_LAYOUT')]) {
-      sh '''#!/bin/bash -euo pipefail
+      sh '''#!/bin/bash
         echo 1111111
         set -e
         echo 2222222
