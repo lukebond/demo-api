@@ -20,8 +20,8 @@ node {
         set -u
         set -o pipefail
         exec 5>&1
-        ls ${INTOTO_BUILD_KEY}
-        cat ${INTOTO_BUILD_KEY}
+        ls ${INTOTO_BUILD_KEY_FILE}
+        cat ${INTOTO_BUILD_KEY_FILE}
         OUTPUT=$(docker image build \
           --build-arg INTOTO_BUILD_KEY=${INTOTO_BUILD_KEY_FILE} \
           --build-arg INTOTO_ROOT_KEY=${INTOTO_ROOT_KEY_FILE} \
