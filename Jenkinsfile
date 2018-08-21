@@ -21,9 +21,9 @@ node {
         set -o pipefail
         exec 5>&1
         cp ${INTOTO_BUILD_KEY_FILE} in-toto/build_key
+        cp ${INTOTO_ROOT_KEY_FILE} in-toto/root_key
+        cp ${INTOTO_ROOT_LAYOUT_FILE} in-toto/root.layout
         OUTPUT=$(docker image build \
-          --build-arg INTOTO_ROOT_KEY=${INTOTO_ROOT_KEY_FILE} \
-          --build-arg INTOTO_ROOT_LAYOUT=${INTOTO_ROOT_LAYOUT_FILE} \
           -f Dockerfile-in-toto . | tee >(cat - >&5))
         IMAGE_ID=$(echo $OUTPUT | grep -B1 'FROM gliderlabs/alpine:3.6 as verify' | head -1 | awk '{print $2}')
         docker image tag ${IMAGE_ID} ${USERNAME}/demo-api:latest
