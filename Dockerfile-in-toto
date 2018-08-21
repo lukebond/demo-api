@@ -36,3 +36,19 @@ COPY --from=builder /usr/src/app/node_modules/ /usr/src/app/node_modules
 EXPOSE 9000
 
 CMD [ "node", "index" ]
+
+#
+
+FROM gliderlabs/alpine:3.6 as verify
+RUN \
+  apk --update add python2 python2-dev py2-pip build-base py2-cffi libressl-dev
+RUN pip install in-toto colorama
+RUN mkdir /in-toto
+WORKDIR /in-toto
+COPY --from=builder /usr/src/app/package.json /in-toto
+COPY --from=builder /usr/src/app/index.js /in-toto
+COPY --from=builder /usr/src/app/node_modules/ /in-toto/node_modules
+COPY --from=builder /usr/src/app/build*.link /in-toto
+ADD in-toto/root.layout /in-toto
+ADD in-toto/root_key.pub /in-toto
+RUN in-toto-verify -v -k root_key.pub -l root.layout
