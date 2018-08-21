@@ -12,6 +12,8 @@ node {
              variable: 'INTOTO_BUILD_KEY_FILE'),
         file(credentialsId: 'intoto-root_key',
              variable: 'INTOTO_ROOT_KEY_FILE'),
+        file(credentialsId: 'intoto-root_key.pub',
+             variable: 'INTOTO_ROOT_KEY_PUB_FILE'),
         file(credentialsId: 'intoto-root.layout',
              variable: 'INTOTO_ROOT_LAYOUT_FILE')]) {
       sh '''#!/bin/bash
@@ -20,7 +22,9 @@ node {
         set -u
         set -o pipefail
         exec 5>&1
+        # you can't mount secret files into docker-in-docker containers
         cp ${INTOTO_BUILD_KEY_FILE} in-toto/build_key
+        cp ${INTOTO_ROOT_KEY_PUB_FILE} in-toto/root_key.pub
         cp ${INTOTO_ROOT_KEY_FILE} in-toto/root_key
         cp ${INTOTO_ROOT_LAYOUT_FILE} in-toto/root.layout
         OUTPUT=$(docker image build \
