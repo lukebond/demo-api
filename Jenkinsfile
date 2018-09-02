@@ -43,10 +43,10 @@ node {
       echo 'Running Kubetest...'
 
       wget -q https://github.com/garethr/kubetest/releases/download/0.1.1/kubetest-linux-amd64.tar.gz
-      tar xf kubetest-linux-amd64.tar.gz kubesec --skip-old-files \
+      tar xf kubetest-linux-amd64.tar.gz kubetest --skip-old-files \
         -C /usr/local/bin && chmod +x /usr/local/bin/kubetest
 
-      if kubetest ./deployment.yaml; then
+      if /kubetest ./deployment.yaml; then
         exit 0;
       fi
 
