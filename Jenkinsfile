@@ -44,11 +44,9 @@ node {
 
       wget -q https://github.com/garethr/kubetest/releases/download/0.1.1/kubetest-linux-amd64.tar.gz
       tar -C /usr/local/bin -xf kubetest-linux-amd64.tar.gz kubetest --skip-old-files
-      ls -la /usr/local/bin
       chmod +x /usr/local/bin/kubetest
-      ls -la /usr/local/bin
 
-      if /kubetest ./deployment.yaml; then
+      if kubetest ./deployment.yaml; then
         exit 0;
       fi
 
