@@ -43,8 +43,7 @@ node {
       echo 'Running Kubetest...'
 
       wget -q https://github.com/garethr/kubetest/releases/download/0.1.1/kubetest-linux-amd64.tar.gz
-      tar xf kubetest-linux-amd64.tar.gz kubetest --skip-old-files \
-        -C /usr/local/bin
+      tar -C /usr/local/bin -xf kubetest-linux-amd64.tar.gz kubetest --skip-old-files \
       ls -la /usr/local/bin
       chmod +x /usr/local/bin/kubetest
       ls -la /usr/local/bin
