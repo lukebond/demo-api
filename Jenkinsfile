@@ -55,11 +55,7 @@ node {
           https://kubesec.io/
       }
       
-      if curl --silent \
-          --compressed \
-          --connect-timeout 5 \
-          -F file=@deployment.yaml \
-          https://kubesec.io/ | jq --exit-status '.score > 10' >/dev/null; then
+      if kubesec ./deployment.yaml | jq --exit-status '.score > 10' >/dev/null; then
         exit 0;
       fi
 
