@@ -43,7 +43,7 @@ node {
       echo 'Running Kubesec...'
 
       kubesec () {
-        local FILE="${1:-}";
+        local FILE="${1}";
         [[ ! -f "${FILE}" ]] && {
             echo "kubesec: ${FILE}: No such file" >&2;
             return 1
