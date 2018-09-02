@@ -46,16 +46,11 @@ node {
       tar -C /usr/local/bin -xf kubetest-linux-amd64.tar.gz kubetest --skip-old-files
       chmod +x /usr/local/bin/kubetest
 
-      echo 1
-      if kubetest -t kubetest ./deployment.yaml; then
-        echo 2
+      if kubetest --verbose --json -t kubetest ./deployment.yaml; then
         exit 0;
-        echo 3
       fi
-      echo 4
 
       exit 1
-      echo 5
     """
   }
 
