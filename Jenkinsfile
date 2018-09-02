@@ -43,7 +43,7 @@ node {
       echo 'Running Kubetest...'
 
       wget -q https://github.com/garethr/kubetest/releases/download/0.1.1/kubetest-linux-amd64.tar.gz
-      tar xf kubetest-linux-amd64.tar.gz
+      tar xf kubetest-linux-amd64.tar.gz --skip-old-files
 
       if ./kubetest ./deployment.yaml; then
         exit 0;
