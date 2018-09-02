@@ -1,0 +1,6 @@
+def test_app_label():
+  if spec["kind"] == "Deployment":
+    labels = spec["spec"]["template"]["metadata"]["labels"]
+    assert_contains(labels, "app", "indicates app name")
+
+test_app_label()

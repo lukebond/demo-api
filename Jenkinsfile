@@ -42,7 +42,7 @@ node {
     sh """
       echo 'Running Kubetest...'
 
-      wget https://github.com/garethr/kubetest/releases/download/0.1.1/kubetest-linux-amd64.tar.gz
+      wget -q https://github.com/garethr/kubetest/releases/download/0.1.1/kubetest-linux-amd64.tar.gz
       tar xf kubetest-linux-amd64.tar.gz
 
       if ./kubetest ./deployment.yaml; then

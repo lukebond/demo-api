@@ -1,0 +1,7 @@
+def test_tag_not_latest():
+  if spec["kind"] == "Deployment":
+    for container in spec["spec"]["template"]["spec"]["containers"]:
+      tag = container["image"].split(":")[-1]
+      assert_not_equal(tag, "latest", "should not use latest images")
+
+test_tag_not_latest()
