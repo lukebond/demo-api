@@ -3,21 +3,21 @@ node {
     checkout scm
   }
 
-  stage('Verify') {
-    withCredentials([
-        file(credentialsId: 'keybase-envfile',
-             usernameVariable: 'KEYBASE_ENV_FILE')]) {
-      def scmUrl = scm.getUserRemoteConfigs()[0].getUrl()
-      sh '''
-        docker run -it --env-file=${KEYBASE_ENV_FILE} \
-          -e KEYBASE_TRUSTED_USERS=lukebond \
-          -e GIT_USER_EMAIL="luke.n.bond+bot@gmail.com" \
-          -e GIT_REPO="${scmUrl}" \
-          -e GIT_REVISIONS_TO_VERIFY=1 \
-          controlplane/keybase:latest
-      '''
-    }
-  }
+  //stage('Verify') {
+  //  withCredentials([
+  //      file(credentialsId: 'keybase-envfile',
+  //           usernameVariable: 'KEYBASE_ENV_FILE')]) {
+  //    def scmUrl = scm.getUserRemoteConfigs()[0].getUrl()
+  //    sh '''
+  //      docker run -it --env-file=${KEYBASE_ENV_FILE} \
+  //        -e KEYBASE_TRUSTED_USERS=lukebond \
+  //        -e GIT_USER_EMAIL="luke.n.bond+bot@gmail.com" \
+  //        -e GIT_REPO="${scmUrl}" \
+  //        -e GIT_REVISIONS_TO_VERIFY=1 \
+  //        controlplane/keybase:latest
+  //    '''
+  //  }
+  //}
 
   stage('Build') {
     withCredentials([
