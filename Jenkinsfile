@@ -50,6 +50,7 @@ node {
         exit 0;
       fi
 
+      echo 'The application failed on kubesec score'
       exit 1
     """
   }
