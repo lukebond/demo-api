@@ -38,7 +38,7 @@ node {
   }
 
   stage('Kubesec') {
-    sh '''
+    sh """
       echo 'Running Kubesec...'
 
       kubesec () {
@@ -59,7 +59,7 @@ node {
       fi
 
       exit 1
-    '''
+    """
   }
 
   stage('Deploy') {
