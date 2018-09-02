@@ -16,6 +16,7 @@ node {
           -e GIT_REVISIONS_TO_VERIFY=1 \
           controlplane/keybase:latest
       '''
+    }
   }
 
   stage('Build') {
@@ -41,11 +42,27 @@ node {
     sh """
       echo 'Running Kubesec...'
 
+      kubesec () {
+        local FILE="${1:-}";
+        [[ ! -f "${FILE}" ]] && {
+            echo "kubesec: ${FILE}: No such file" >&2;
+            return 1
+        };
+        curl --silent \
+          --compressed \
+          --connect-timeout 5 \
+          -F file=@"${FILE}" \
+          https://kubesec.io/
+      }
       if curl --silent \
           --compressed \
           --connect-timeout 5 \
           -F file=@deployment.yaml \
           https://kubesec.io/ | jq --exit-status '.score > 10' >/dev/null; then
+        exit 0;
+      fi
+
+      if kubesec ./deployment.yaml | jq --exit-status '.score > 10' >/dev/null; then
         exit 0;
       fi
 
