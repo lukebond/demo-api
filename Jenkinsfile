@@ -18,7 +18,6 @@ pipeline {
       steps {
         in_toto_wrap([
             'stepName': 'Build',
-            'credentialId': 'keyId01',
             'transport': '${METADATA_SERVICE}/links/${NAMESPACE}/build']) {
           echo 'Building..'
           sh 'docker image build -t lukebond/demo-api:${IMAGE_TAG} .'
