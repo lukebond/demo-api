@@ -1,9 +1,12 @@
+@Field
+def metadataService = 'https://10.102.233.120'
+@Field
+def namespace = 'cloudnativeglasgow'
+@Field
+def imageTag = 'demo-gods'
+
 pipeline {
   agent any
-
-  metadataService = 'https://10.102.233.120'
-  namespace = 'cloudnativeglasgow'
-  imageTag = 'demo-gods'
 
   stages {
     stage('Checkout') {
