@@ -1,36 +1,26 @@
+environment {
+  METADATA_SERVICE = 'https://10.102.233.120'
+  NAMESPACE = 'cloudnativeglasgow'
+  IMAGE_TAG = 'demo-gods'
+}
+
 node {
   stage('Checkout') {
     checkout scm
   }
 
   stage('Build') {
-    withCredentials([
-        usernamePassword(credentialsId: 'docker-credentials',
-                         usernameVariable: 'USERNAME',
-                         passwordVariable: 'PASSWORD'),
-        file(credentialsId: 'intoto-build_key',
-             variable: 'INTOTO_BUILD_KEY_FILE'),
-        file(credentialsId: 'intoto-root_key.pub',
-             variable: 'INTOTO_ROOT_KEY_PUB_FILE'),
-        file(credentialsId: 'intoto-root.layout',
-             variable: 'INTOTO_ROOT_LAYOUT_FILE')]) {
-      sh '''#!/bin/bash
-        set -e
-        set -u
-        set -o pipefail
-        exec 5>&1
-        # you can't mount secret files into docker-in-docker containers
-        cp ${INTOTO_BUILD_KEY_FILE} in-toto/build_key
-        cp ${INTOTO_ROOT_KEY_PUB_FILE} in-toto/root_key.pub
-        cp ${INTOTO_ROOT_LAYOUT_FILE} in-toto/root.layout
-        OUTPUT=$(docker image build \
-          -f Dockerfile-in-toto . | tee >(cat - >&5))
-        IMAGE_ID=$(echo "${OUTPUT}" | grep -B1 'FROM gliderlabs/alpine:3.6 as verify' | head -1 | awk '{print $2}')
-        docker image tag ${IMAGE_ID} ${USERNAME}/demo-api:latest
-      '''
+    steps {
+      in_toto_wrap([
+          'stepName': 'Build',
+          'credentialId': 'keyId01',
+          'transport': '${METADATA_SERVICE}/links/${NAMESPACE}/build']) {
+        echo 'Building..'
+        sh 'docker image build -t lukebond/demo-api:${IMAGE_TAG} .'
+      }
     }
   }
-
+/*
   stage('Scan') {
     withCredentials([
         string(credentialsId: 'microscanner-token',
@@ -96,4 +86,5 @@ node {
       sh 'kubectl apply -f deployment.yaml'
     }
   }
+*/
 }
