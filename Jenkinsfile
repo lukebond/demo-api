@@ -1,3 +1,5 @@
+import groovy.transform.Field
+
 @Field
 def metadataService = 'https://10.102.233.120'
 @Field
