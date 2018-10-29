@@ -5,7 +5,7 @@ environment {
 }
 
 pipeline {
-  agent none
+  agent any
 
   stages {
     stage('Checkout') {
