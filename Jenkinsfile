@@ -1,9 +1,9 @@
 pipeline {
   agent any
 
-  def metadataService = 'https://10.102.233.120'
-  def namespace = 'cloudnativeglasgow'
-  def imageTag = 'demo-gods'
+  metadataService = 'https://10.102.233.120'
+  namespace = 'cloudnativeglasgow'
+  imageTag = 'demo-gods'
 
   stages {
     stage('Checkout') {
