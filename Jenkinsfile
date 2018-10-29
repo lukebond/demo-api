@@ -1,11 +1,9 @@
-environment {
-  METADATA_SERVICE = 'https://10.102.233.120'
-  NAMESPACE = 'cloudnativeglasgow'
-  IMAGE_TAG = 'demo-gods'
-}
-
 pipeline {
   agent any
+
+  def metadataService = 'https://10.102.233.120'
+  def namespace = 'cloudnativeglasgow'
+  def imageTag = 'demo-gods'
 
   stages {
     stage('Checkout') {
@@ -19,9 +17,9 @@ pipeline {
         in_toto_wrap([
             'stepName': 'build',
             'credentialId': 'build_key',
-            'transport': "${METADATA_SERVICE}/links/${NAMESPACE}/build"]) {
+            'transport': "${metadataService}/links/${namespace}/build"]) {
           echo 'Building..'
-          sh "docker image build -t lukebond/demo-api:${IMAGE_TAG} ."
+          sh "docker image build -t lukebond/demo-api:${imageTag} ."
         }
       }
     }
