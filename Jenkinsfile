@@ -98,7 +98,7 @@ pipeline {
         withCredentials([
             file(credentialsId: 'kube-config',
                  variable: 'KUBECONFIG')]) {
-          sh 'kubectl apply -f deployment.yaml'
+          sh 'kubectl apply -f pod.yaml'
         }
       }
     }
