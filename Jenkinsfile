@@ -87,7 +87,7 @@ pipeline {
             usernamePassword(credentialsId: 'docker-credentials',
                              usernameVariable: 'USERNAME',
                              passwordVariable: 'PASSWORD')]) {
-          sh "docker login -p ${PASSWORD} -u ${USERNAME}"
+          sh "echo ${PASSWORD} | docker login --password-stdin -u ${USERNAME}"
           sh "docker image push ${USERNAME}/demo-api:${imageTag}"
         }
       }
