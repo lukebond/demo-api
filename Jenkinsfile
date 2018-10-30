@@ -93,17 +93,14 @@ pipeline {
       }
     }
 
-/*
     stage('Deploy') {
       steps {
         withCredentials([
             file(credentialsId: 'kube-config',
                  variable: 'KUBECONFIG')]) {
-          //sh 'gpg2 --output - --verify signature.gpg'
           sh 'kubectl apply -f deployment.yaml'
         }
       }
     }
-*/
   }
 }

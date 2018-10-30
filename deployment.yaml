@@ -18,7 +18,7 @@ spec:
         run: demo-api
     spec:
       containers:
-      - image: lukebond/demo-api:latest
+      - image: lukebond/demo-api:demo-gods
         imagePullPolicy: Always
         name: demo-api
         ports:
