@@ -3,7 +3,9 @@ import groovy.transform.Field
 @Field
 def metadataService = 'https://in-toto-webhook.in-toto.svc'
 @Field
-def namespace = 'cloudnativeglasgow'
+def namespace = 'lukebond'
+@Field
+def imageRepo = 'demo-api'
 @Field
 def imageTag = 'demo-gods'
 
@@ -22,7 +24,7 @@ pipeline {
         in_toto_wrap([
             'stepName': 'build',
             'credentialId': 'build_key',
-            'transport': "${metadataService}/links/${namespace}/build"]) {
+            'transport': "${metadataService}/links/${namespace}/${imageRepo}/build.cd03e793.link"]) {
           echo 'Building..'
           sh "docker image build -t lukebond/demo-api:${imageTag} ."
         }
