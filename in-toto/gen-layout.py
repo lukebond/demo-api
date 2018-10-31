@@ -11,7 +11,6 @@ layout = Layout()
 build = Step(name="build")
 build.expected_materials.append(['ALLOW', 'package.json'])
 build.expected_materials.append(['ALLOW', 'index.js'])
-build.expected_command = ['npm', 'install']
 layout.steps.append(build)
 layout.add_functionary_key(build_key)
 
