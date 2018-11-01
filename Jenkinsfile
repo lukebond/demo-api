@@ -47,7 +47,7 @@ pipeline {
         }
       }
     }
-/*
+
     stage('Kubesec') {
       steps {
         in_toto_wrap([
@@ -55,20 +55,11 @@ pipeline {
             'credentialId': 'jenkins_key',
             'transport': "${metadataService}/links/${namespace}/${imageRepo}/kubesec.4c6d68dc.link"]) {
           sh '''
-						kubesec ()
-						{
-						    local FILE="${1:-}";
-						    [[ ! -f "${FILE}" ]] && {
-						        echo "kubesec: ${FILE}: No such file" >&2;
-						        return 1
-						    };
-						    curl --silent \
-						      --compressed \
-						      --connect-timeout 5 \
-						      -F file=@"${FILE}" \
-						      https://kubesec.io/
-						}
-						kubesec pod.yaml > kubesec-report.json
+						curl --silent \
+						  --compressed \
+						  --connect-timeout 5 \
+						  -F file=@pod.yaml \
+						  https://kubesec.io/ > kubesec-report.json
           '''
         }
       }
