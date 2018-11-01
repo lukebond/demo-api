@@ -26,9 +26,6 @@ kubesec.pubkeys.append(jenkins_key['keyid'])
 layout.steps.append(kubesec)
 layout.add_functionary_key(jenkins_key)
 
-scan.pubkeys.append(jenkins_key['keyid'])
-kubesec.pubkeys.append(jenkins_key['keyid'])
-
 generate_and_write_rsa_keypair("root_key")
 root_key = import_rsa_key_from_file("root_key")
 

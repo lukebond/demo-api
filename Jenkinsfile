@@ -42,7 +42,7 @@ pipeline {
                      variable: 'MICROSCANNER_TOKEN')]) {
             sh 'wget -q https://github.com/lukebond/microscanner-wrapper/raw/master/scan.sh -O scan.sh && chmod +x scan.sh'
             sh 'wget -q https://github.com/lukebond/microscanner-wrapper/raw/master/grabjson.sh -O grabjson.sh && chmod +x grabjson.sh'
-            sh "./grabjson.sh lukebond/demo-api:${imageTag} > microscanner-report.json"
+            sh "MICROSCANNER_OPTIONS=\"--continue-on-failure\" ./grabjson.sh lukebond/demo-api:${imageTag} > microscanner-report.json"
           }
         }
       }
