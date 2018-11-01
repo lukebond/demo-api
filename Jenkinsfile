@@ -64,7 +64,7 @@ pipeline {
         }
       }
     }
-/*
+
     stage('Sign') {
       steps {
         withCredentials([
@@ -101,7 +101,6 @@ pipeline {
         }
       }
     }
-*/
 */
     stage('Push') {
       steps {
