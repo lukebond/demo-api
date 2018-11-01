@@ -30,21 +30,24 @@ pipeline {
         }
       }
     }
-/*
+
     stage('Scan') {
       steps {
-        withCredentials([
-            string(credentialsId: 'microscanner-token',
-                   variable: 'MICROSCANNER_TOKEN'),
-            usernamePassword(credentialsId: 'docker-credentials',
-                             usernameVariable: 'USERNAME',
-                             passwordVariable: 'PASSWORD')]) {
-          sh 'wget -q https://github.com/lukebond/microscanner-wrapper/raw/master/scan.sh -O /usr/local/bin/scan.sh && chmod +x /usr/local/bin/scan.sh'
-          sh 'MICROSCANNER_OPTIONS=--continue-on-failure /usr/local/bin/scan.sh ${USERNAME}/demo-api:latest'
+        in_toto_wrap([
+            'stepName': 'scan',
+            'credentialId': 'scan_key',
+            'transport': "${metadataService}/links/${namespace}/${imageRepo}/scan.cd03e793.link"]) {
+          withCredentials([
+              string(credentialsId: 'microscanner-token',
+                     variable: 'MICROSCANNER_TOKEN')]) {
+            sh 'wget -q https://github.com/lukebond/microscanner-wrapper/raw/master/scan.sh -O scan.sh && chmod +x scan.sh'
+            sh 'wget -q https://github.com/lukebond/microscanner-wrapper/raw/master/getjson.sh -O getjson.sh && chmod +x getjson.sh'
+            sh './getjson.sh lukebond/demo-api:${imageTag} > report.json'
+          }
         }
       }
     }
-
+/*
     stage('Sign') {
       steps {
         withCredentials([
