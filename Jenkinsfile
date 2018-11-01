@@ -41,8 +41,8 @@ pipeline {
               string(credentialsId: 'microscanner-token',
                      variable: 'MICROSCANNER_TOKEN')]) {
             sh 'wget -q https://github.com/lukebond/microscanner-wrapper/raw/master/scan.sh -O scan.sh && chmod +x scan.sh'
-            sh 'wget -q https://github.com/lukebond/microscanner-wrapper/raw/master/getjson.sh -O getjson.sh && chmod +x getjson.sh'
-            sh './getjson.sh lukebond/demo-api:${imageTag} > microscanner-report.json'
+            sh 'wget -q https://github.com/lukebond/microscanner-wrapper/raw/master/grabjson.sh -O grabjson.sh && chmod +x grabjson.sh'
+            sh './grabjson.sh lukebond/demo-api:${imageTag} > microscanner-report.json'
           }
         }
       }
