@@ -47,7 +47,7 @@ pipeline {
         }
       }
     }
-
+/*
     stage('Kubesec') {
       steps {
         in_toto_wrap([
@@ -102,7 +102,7 @@ pipeline {
       }
     }
 */
-
+*/
     stage('Push') {
       steps {
         withCredentials([
