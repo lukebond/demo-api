@@ -23,7 +23,7 @@ pipeline {
       steps {
         in_toto_wrap([
             'stepName': 'build',
-            'credentialId': 'build_key',
+            'credentialId': 'jenkins_key',
             'transport': "${metadataService}/links/${namespace}/${imageRepo}/build.cd03e793.link"]) {
           echo 'Building..'
           sh "docker image build -t lukebond/demo-api:${imageTag} ."
@@ -35,15 +35,41 @@ pipeline {
       steps {
         in_toto_wrap([
             'stepName': 'scan',
-            'credentialId': 'scan_key',
+            'credentialId': 'jenkins_key',
             'transport': "${metadataService}/links/${namespace}/${imageRepo}/scan.cd03e793.link"]) {
           withCredentials([
               string(credentialsId: 'microscanner-token',
                      variable: 'MICROSCANNER_TOKEN')]) {
             sh 'wget -q https://github.com/lukebond/microscanner-wrapper/raw/master/scan.sh -O scan.sh && chmod +x scan.sh'
             sh 'wget -q https://github.com/lukebond/microscanner-wrapper/raw/master/getjson.sh -O getjson.sh && chmod +x getjson.sh'
-            sh './getjson.sh lukebond/demo-api:${imageTag} > report.json'
+            sh './getjson.sh lukebond/demo-api:${imageTag} > microscanner-report.json'
           }
+        }
+      }
+    }
+
+    stage('Kubesec') {
+      steps {
+        in_toto_wrap([
+            'stepName': 'kubesec',
+            'credentialId': 'jenkins_key',
+            'transport': "${metadataService}/links/${namespace}/${imageRepo}/kubesec.cd03e793.link"]) {
+          sh '''
+						kubesec ()
+						{
+						    local FILE="${1:-}";
+						    [[ ! -f "${FILE}" ]] && {
+						        echo "kubesec: ${FILE}: No such file" >&2;
+						        return 1
+						    };
+						    curl --silent \
+						      --compressed \
+						      --connect-timeout 5 \
+						      -F file=@"${FILE}" \
+						      https://kubesec.io/
+						}
+						kubesec pod.yaml > kubesec-report.json
+          '''
         }
       }
     }

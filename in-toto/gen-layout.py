@@ -4,22 +4,30 @@ from in_toto.models.layout import Layout, Step
 from in_toto.models.metadata import Metablock
 from in_toto.util import generate_and_write_rsa_keypair, import_rsa_key_from_file
 
-generate_and_write_rsa_keypair("build_key")
-generate_and_write_rsa_keypair("scan_key")
-build_key = import_rsa_key_from_file("build_key.pub")
-scan_key = import_rsa_key_from_file("scan_key.pub")
+generate_and_write_rsa_keypair("jenkins_key")
+jenkins_key = import_rsa_key_from_file("jenkins_key.pub")
 
 layout = Layout()
+
 build = Step(name="build")
+build.pubkeys.append(jenkins_key['keyid'])
 layout.steps.append(build)
-layout.add_functionary_key(build_key)
+layout.add_functionary_key(jenkins_key)
 
 scan = Step(name="scan")
+scan.expected_products.append(['ALLOW', 'microscanner-report.json'])
+scan.pubkeys.append(jenkins_key['keyid'])
 layout.steps.append(scan)
-layout.add_functionary_key(scan_key)
+layout.add_functionary_key(jenkins_key)
 
-build.pubkeys.append(build_key['keyid'])
-scan.pubkeys.append(scan_key['keyid'])
+kubesec = Step(name="kubesec")
+kubesec.expected_products.append(['ALLOW', 'kubesec-report.json'])
+kubesec.pubkeys.append(jenkins_key['keyid'])
+layout.steps.append(kubesec)
+layout.add_functionary_key(jenkins_key)
+
+scan.pubkeys.append(jenkins_key['keyid'])
+kubesec.pubkeys.append(jenkins_key['keyid'])
 
 generate_and_write_rsa_keypair("root_key")
 root_key = import_rsa_key_from_file("root_key")
