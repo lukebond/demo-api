@@ -1,7 +1,7 @@
 import groovy.transform.Field
 
 @Field
-def metadataService = 'https://in-toto-webhook.in-toto.svc'
+def metadataService = 'https://in-toto-webhook.in-toto.svc:8080'
 @Field
 def namespace = 'lukebond'
 @Field
