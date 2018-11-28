@@ -30,7 +30,7 @@ pipeline {
         }
       }
     }
-/*
+
     stage('Scan') {
       steps {
         in_toto_wrap([
@@ -64,7 +64,7 @@ pipeline {
         }
       }
     }
-
+/*
     stage('Sign') {
       steps {
         withCredentials([
