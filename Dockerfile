@@ -1,7 +1,7 @@
-FROM gliderlabs/alpine:3.6
+FROM sublimino/alpine-base:insecure 
 
 RUN \
-  apk --update add nodejs nodejs-npm python make g++ \
+  apk --update add nodejs python make g++ \
     curl wget build-base ca-certificates git
 
 WORKDIR /usr/src/app
